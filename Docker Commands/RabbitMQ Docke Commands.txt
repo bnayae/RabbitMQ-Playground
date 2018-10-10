@@ -1,0 +1,15 @@
+# Pull the image (latest)
+docker pull rabbitmq
+
+# Run without volume map
+docker run -d -p 15672:15672 -p 5671-5672:5671-5672 -p 4369:4369 -p 25672:25672 --hostname rabbit-playground --name rabbit-play rabbitmq
+
+# Run with volume map (CAUSE CRASHES)
+docker run -d -p 15672:15672 -p 5671-5672:5671-5672 -p 4369:4369 -p 25672:25672 --hostname rabbit-playground --name rabbit-play -v C:/Docker/Volumes/rabbitmq/:/var/lib/rabbitmq/ rabbitmq
+
+# Get internal docker IP
+docker inspect rabbit-play | grep -w "IPAddress" | awk '{ print $2 }' | head -n 1 | cut -d "," -f1
+docker inspect rabbit-play | grep "IPAddress"
+
+# Logs
+docker logs rabbit-play
